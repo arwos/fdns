@@ -17,9 +17,8 @@ import (
 	"go.osspkg.com/logx"
 	"go.osspkg.com/random"
 
-	"github.com/osspkg/fdns/app/database"
-
 	"github.com/osspkg/fdns/app/cache"
+	"github.com/osspkg/fdns/app/database"
 	"github.com/osspkg/fdns/app/dnscli"
 	"github.com/osspkg/fdns/app/rules"
 )

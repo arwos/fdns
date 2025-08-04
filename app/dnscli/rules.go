@@ -6,8 +6,6 @@ import (
 	"go.osspkg.com/validate"
 )
 
-const UniversalZone = "*"
-
 type Rules struct {
 	data cache.Cache[string, []string]
 }
@@ -34,11 +32,6 @@ func (v *Rules) Resolve(zone string) (result []string) {
 			result = append(result, ips...)
 			return
 		}
-	}
-
-	if ips, ok := v.data.Get(UniversalZone); ok {
-		result = append(result, ips...)
-		return
 	}
 
 	return
