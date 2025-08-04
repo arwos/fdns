@@ -1,42 +1,42 @@
+/*
+ *  Copyright (c) 2020-2025 Mikhail Knyazhev <markus621@yandex.com>. All rights reserved.
+ *  Use of this source code is governed by a BSD 3-Clause license that can be found in the LICENSE file.
+ */
+
 package main
 
 import (
-	"github.com/dewep-online/fdns/internal/dnsserver"
-	"github.com/dewep-online/fdns/internal/webserver"
-	"github.com/dewep-online/fdns/pkg"
-	"github.com/deweppro/go-app/application"
-	"github.com/deweppro/go-app/console"
-	"github.com/deweppro/go-logger"
+	"go.osspkg.com/goppy/v2"
+	"go.osspkg.com/goppy/v2/orm"
+	"go.osspkg.com/goppy/v2/web"
+	"go.osspkg.com/goppy/v2/xdns"
+
+	"github.com/osspkg/fdns/app/api"
+	"github.com/osspkg/fdns/app/cache"
+	"github.com/osspkg/fdns/app/database"
+	"github.com/osspkg/fdns/app/dnscli"
+	"github.com/osspkg/fdns/app/resolver"
+	"github.com/osspkg/fdns/app/rules"
 )
 
-func main() {
-	root := console.New("uri-one", "help uri-one")
-	root.AddCommand(appRun())
-	root.Exec()
-}
+var Version = "v0.0.0-dev"
 
-func appRun() console.CommandGetter {
-	return console.NewCommand(func(setter console.CommandSetter) {
-		setter.Setup("run", "run application")
-		setter.Example("run --config=./config.yaml")
-		setter.Flag(func(f console.FlagsSetter) {
-			f.StringVar("config", "./config.yaml", "path to config file")
-		})
-		setter.ExecFunc(func(_ []string, config string) {
-			application.New().
-				Logger(logger.Default()).
-				ConfigFile(
-					config,
-					pkg.Config,
-					webserver.Config,
-					dnsserver.Config,
-				).
-				Modules(
-					pkg.Module,
-					webserver.Module,
-					dnsserver.Module,
-				).
-				Run()
-		})
-	})
+func main() {
+	app := goppy.New("fDNS", Version, "filter dns")
+	app.Plugins(
+		web.WithServer(),
+		web.WithClient(),
+		orm.WithPgsqlClient(),
+		orm.WithMigration(),
+		orm.WithORM(),
+		xdns.WithServer(),
+		xdns.WithClient(),
+	)
+	app.Plugins(api.Plugins...)
+	app.Plugins(cache.Plugins...)
+	app.Plugins(rules.Plugins...)
+	app.Plugins(database.Plugins...)
+	app.Plugins(resolver.Plugins...)
+	app.Plugins(dnscli.Plugins...)
+	app.Run()
 }

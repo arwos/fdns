@@ -1,0 +1,13 @@
+-- SEQUENCE
+CREATE SEQUENCE IF NOT EXISTS "setting_id_seq" INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1;
+
+-- TABLE
+CREATE TABLE IF NOT EXISTS "setting" (
+	 "id" BIGINT DEFAULT nextval('setting_id_seq') NOT NULL ,
+	 CONSTRAINT "setting_id_pk" PRIMARY KEY ("id"),
+	 "key" VARCHAR(20) NOT NULL,
+	 "value" JSONB NOT NULL,
+	 "updated_at" TIMESTAMPTZ NOT NULL,
+	 CONSTRAINT "setting__key__uniq" UNIQUE ("key")
+);
+
