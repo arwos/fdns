@@ -1,0 +1,46 @@
+env: dev
+log:
+    file_path: /dev/stdout
+    format: string
+    level: 3
+
+dns:
+    addr: 0.0.0.0:8053
+
+http:
+    - addr: 0.0.0.0:8080
+      tag: main
+
+pgsql:
+    - app_name: goppy_app
+      tags: master
+      host: 127.0.0.1
+      port: 5432
+      user: postgres
+      schema: postgres
+      password: postgres
+      charset: UTF8
+      maxconnttl: 50s
+      maxidleconn: 5
+      maxopenconn: 5
+      timeout: 5s
+      sslmode: false
+      
+    - app_name: goppy_app
+      tags: slave
+      host: 127.0.0.1
+      port: 5432
+      user: postgres
+      schema: postgres
+      password: postgres
+      charset: UTF8
+      maxconnttl: 50s
+      maxidleconn: 5
+      maxopenconn: 5
+      timeout: 5s
+      sslmode: false
+
+db_migrate:
+    - dialect: pgsql
+      dir: ./migrations
+      tags: master
