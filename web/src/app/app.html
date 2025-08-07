@@ -1,0 +1,35 @@
+<div data-ong-theme="colorful" class="p-0 m-0 w-full">
+
+  <div class="row p-0 m-0">
+    <div class="col-2 p-0 m-0 p-fixed">
+
+      <ong-menuv>
+        <ng-template ong-menuv-header>
+          <div class="h-full d-flex d-flex-x-center d-flex-y-stretch">
+            <h2 class="t-color-danger d-flex-content-center">fDNS</h2>
+          </div>
+        </ng-template>
+        <ng-template ong-menuv-body>
+          <div class="p-2">
+            <a [ong-href]="'/'" [ong-active-route]="['bg-warning']" class="no-link box">Home</a>
+            <a [ong-href]="'/adblock'" [ong-active-route]="['bg-warning']" class="no-link box">AdBlock</a>
+            <a [ong-href]="'/about'" [ong-active-route]="['bg-warning']" class="no-link box">About</a>
+          </div>
+        </ng-template>
+        <ng-template ong-menuv-footer>
+          <div class="h-full d-flex d-flex-x-center d-flex-y-stretch">
+            <span class="d-flex-content-center">&copy; The OSSPkg Team</span>
+          </div>
+        </ng-template>
+      </ong-menuv>
+
+    </div>
+    <div class="col-10 p-2 p15rem w-80">
+
+      <router-outlet/>
+
+    </div>
+  </div>
+</div>
+
+

@@ -25,7 +25,8 @@ func NewApi(r web.RouterPool, repo *database.RepoModels) *Api {
 
 func (v *Api) Up() error {
 	api := v.router.Collection("/api")
-	api.Get("/blacklist/adblock/list", v.AdblockList)
+	api.Get("/adblock/list", v.AdblockList)
+
 	return nil
 }
 

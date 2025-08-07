@@ -1,0 +1,33 @@
+<ong-tabs [color]="'danger'" [style]="'line'">
+  <ng-template ong-tab-name="Search">
+
+    <div class="box">Search: <input [(ngModel)]="search" type="text" class="w-full"></div>
+
+    <br><br>
+
+    @for (link of list.links; track link.id) {
+      <div class="row" [ngClass]="{'bq-danger': link.disabled, 'bq-success': !link.disabled}">
+        <div class="col-12 p-0">
+          <a [href]="link.link" target="_blank" class="no-link">{{ link.link }}</a>
+        </div>
+      </div>
+
+      <div class="row w-full">
+        @for (rule of list.rules|search1: link.id: search; track rule.id) {
+          <div class="col box mt-1 mr-1"
+               [ngClass]="{'box-danger': rule.disabled, 'box-light': !rule.disabled}"
+               [innerHTML]="rule.rule|mark:search"></div>
+        }
+      </div>
+
+    } @empty {
+      <div>empty links</div>
+    }
+
+  </ng-template>
+  <ng-template ong-tab-name="Add Link">
+    <div>Tab2</div>
+  </ng-template>
+</ong-tabs>
+
+
